@@ -61,7 +61,7 @@ matrix:
           packages: ['clang-8','postgresql-10-postgis-2.4',
                           'python3-psycopg2', 'libexpat1-dev', 'libpq-dev', 'libbz2-dev', 'libproj-dev',
                           'lua5.2', 'liblua5.2-dev', 'libluajit-5.1-dev',
-                          'libboost1.55-dev', 'libboost-system1.55-dev', 'libboost-filesystem1.55-dev']
+                          'libboost1.58-dev', 'libboost-system1.58-dev', 'libboost-filesystem1.58-dev']
 
 #  # ---- OSX + CLANG ---------------------------
 #    - os: osx
