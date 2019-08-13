@@ -8,19 +8,6 @@ services:
   - postgresql
 
 addons_shortcuts:
-  addons_clang7_pg96: &clang7_pg96
-    postgresql: '9.6'
-    apt:
-      update: true
-      sources:
-        - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-7 main'
-          key_url: https://apt.llvm.org/llvm-snapshot.gpg.key
-        - ubuntu-toolchain-r-test
-      packages: ['clang-7','postgresql-9.6-postgis-2.4',
-                      'python3-psycopg2', 'libexpat1-dev', 'libpq-dev', 'libbz2-dev', 'libproj-dev',
-                      'lua5.2', 'liblua5.2-dev', 'libluajit-5.1-dev',
-                      'libboost1.55-dev', 'libboost-system1.55-dev', 'libboost-filesystem1.55-dev']
-
   addons_gcc48_pg96: &gcc48_pg96
     postgresql: '9.6'
     apt:
@@ -44,30 +31,38 @@ addons_shortcuts:
 matrix:
   include:
   # ---- Linux + CLANG ---------------------------
-    - os: linux
-      dist: xenial
-      compiler: "clang-3.8"
-      env: T="clang38_pg94_dbtest" LUAJIT_OPTION="OFF"
-           CXXFLAGS="-pedantic -Wextra -Werror"
-           CC=clang-3.8 CXX=clang++-3.8
-      addons:
-        postgresql: '9.4'
-        apt:
-          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-xenial-3.8']
-          packages: ['clang-3.8', 'postgresql-9.4-postgis-2.4',
-                      'python3-psycopg2', 'libexpat1-dev', 'libpq-dev', 'libbz2-dev', 'libproj-dev',
-                      'lua5.2', 'liblua5.2-dev', 'libluajit-5.1-dev',
-                      'libboost1.58-dev', 'libboost-system1.58-dev', 'libboost-filesystem1.58-dev']
-
-
 #    - os: linux
-#      dist: trusty
-#      compiler: "clang-7"
-#      env: T="clang7_pg96_dbtest_luajit" LUAJIT_OPTION="ON"
+#      dist: xenial
+#      compiler: "clang-3.8"
+#      env: T="clang38_pg94_dbtest" LUAJIT_OPTION="OFF"
 #           CXXFLAGS="-pedantic -Wextra -Werror"
-#           CC=clang-7 CXX=clang++-7
-#      addons: *clang7_pg96
+#           CC=clang-3.8 CXX=clang++-3.8
+#      addons:
+#        postgresql: '9.4'
+#        apt:
+#          sources: ['ubuntu-toolchain-r-test']
+#          packages: ['clang-3.8', 'postgresql-9.4-postgis-2.4',
+#                      'python3-psycopg2', 'libexpat1-dev', 'libpq-dev', 'libbz2-dev', 'libproj-dev',
+#                      'lua5.2', 'liblua5.2-dev', 'libluajit-5.1-dev',
+#                      'libboost1.58-dev', 'libboost-system1.58-dev', 'libboost-filesystem1.58-dev']
 #
+
+    - os: linux
+      dist: bionic
+      compiler: "clang-8"
+      env: T="clang8_pg10_dbtest_luajit" LUAJIT_OPTION="ON"
+           CXXFLAGS="-pedantic -Wextra -Werror"
+           CC=clang-8 CXX=clang++-8
+      addons: 
+        postgresql: '10'
+        apt:
+          update: true
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-bionic-8']
+          packages: ['clang-8','postgresql-10-postgis-2.4',
+                          'python3-psycopg2', 'libexpat1-dev', 'libpq-dev', 'libbz2-dev', 'libproj-dev',
+                          'lua5.2', 'liblua5.2-dev', 'libluajit-5.1-dev',
+                          'libboost1.55-dev', 'libboost-system1.55-dev', 'libboost-filesystem1.55-dev']
+
 #  # ---- OSX + CLANG ---------------------------
 #    - os: osx
 #      compiler: clang
